@@ -4,7 +4,7 @@ namespace prodcd;
  * PHP助手类
  * @package prodcd
  */
-class Delper
+class delper
 {
 
     /**

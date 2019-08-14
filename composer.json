@@ -1,0 +1,13 @@
+{
+    "name": "prodcd/delper",
+    "description": "test",
+    "type": "library",
+    "authors": [
+        {
+            "name": "prodcd",
+            "email": "prodcd@qq.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}

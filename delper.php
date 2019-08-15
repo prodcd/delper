@@ -27,38 +27,23 @@ class delper
     }
 
     /**
-     * 判断字符串是不是IP地址
-     * @param $ipstr
+     * 判断ip是否在规定子网中
+     * @param $ip string 例如："192.168.10.125"
+     * @param $ipc string 例如："192.168.10.125/24"
      * @return bool
      */
-    /*public static function is_ip($ipstr)
+    public static function in_IP($ip, $ipc)
     {
-        //判断字符串长度
-        $ipLen = strlen($ipstr);
-        if ($ipLen > 15 || $ipLen < 7) return false;
-        //判断字符串规格
-        $ip = explode('.', $ipstr);
-        $countIp = count($ip);
-        if ($countIp != 4) return false;
-        //判断数字在0-255之间
-        for ($i = 0; $i < $countIp; $i++) {
-            if (!is_numeric($ip[$i]) || $ip[$i] > 255 || $ip[$i] < 0) {
-                return false;
-            }
-        }
+        $ip1 = ip2long($ip);
+        if (!$ip1) return false;//判断IP格式
+        $ips = explode('/',$ipc);
+        if (count($ips)!=2) return false;
+        $ip2 = ip2long($ips[0]);
+        if (!$ip2) return false;//判断IP格式
+        if (!is_numeric($ips[1]) || $ips[1]>32 || $ips[1]<0) return false;//判断掩码格式
+        $diff = decbin($ip1 ^ $ip2);
+        if ($diff==0) return true;
+        if (strlen($diff) > (32 - $ips[1])) return false;//判断掩码
         return true;
-    }*/
-
-    /**
-     * IP地址转二进制
-     * @param $ipStr
-     * @return bool|string
-     */
-    public static function ip2bin($ipStr)
-    {
-        $ip = ip2long($ipStr);
-        if (!$ip) return false;
-        $ipUint = sprintf("%u", $ip);
-        return decbin($ipUint);
     }
 }

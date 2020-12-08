@@ -2,6 +2,7 @@
     "name": "prodcd/delper",
     "description": "test",
     "type": "library",
+    "license": "MIT",
     "authors": [
         {
             "name": "prodcd",

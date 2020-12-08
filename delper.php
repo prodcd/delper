@@ -46,4 +46,44 @@ class delper
         if (strlen($diff) > (32 - $ips[1])) return false;//判断掩码
         return true;
     }
+    /**
+     * bigint转字符串，不支持-9223372036854775808
+     * 超过范围的整数在PHP中会被转换成float，不支持
+     * $codes 的顺序可以任意更改，但需要两个函数使用同样的$codes
+     * @param $num bigint 范围-9223372036854775807 ~ 9223372036854775807
+     * @param $ipc string 例如："192.168.10.125/24"
+     * @return string
+     */
+    public static function bigintToCode($num)
+    {
+        $out  = "";
+        $codes = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ,_";
+        for ($i=0;$i<11;$i++)
+        {
+            if ($num == 0) break;
+            $key = $num & 0b00111111;
+            $num = $num >> 6;
+            $out = $codes{$key}.$out;
+        }
+        return $out;
+    }
+    /**
+     * 字符串转bigint
+     * @param $code string 从bigintToCode()返回的字符串
+     * @return bigint
+     */
+    public static function codeToBigint($code)
+    {
+        $codes = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ,_";
+        $num = 0;
+        $codelen = strlen($code);
+        for($i=0; $i < $codelen; $i++)
+        {
+            $char = $code{$i};
+            $pos  = strpos($codes, $char);
+            $num  = $num << 6;
+            $num  +=$pos;
+        }
+        return $num;
+    }
 }

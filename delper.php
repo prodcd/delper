@@ -52,7 +52,7 @@ class delper
      * $codes 的顺序可以任意更改，但需要两个函数使用同样的$codes
      * @param $num bigint 范围-9223372036854775807 ~ 9223372036854775807
      * @param $ipc string 例如："192.168.10.125/24"
-     * @return string
+     * @return string 返回字符串可以安全在URL中传输
      */
     public static function bigintToCode($num)
     {

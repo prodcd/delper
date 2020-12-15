@@ -12,7 +12,7 @@
     "autoload": {
         "files": [
             "delper.php"
-        ],
+        ]
     },
     "minimum-stability": "dev",
     "require": {}

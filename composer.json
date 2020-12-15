@@ -9,6 +9,11 @@
             "email": "prodcd@qq.com"
         }
     ],
+    "autoload": {
+        "files": [
+            "delper.php"
+        ],
+    },
     "minimum-stability": "dev",
     "require": {}
 }

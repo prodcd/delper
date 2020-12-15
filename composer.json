@@ -1,6 +1,6 @@
 {
     "name": "prodcd/delper",
-    "description": "test",
+    "description": "一些自定义函数",
     "type": "library",
     "license": "MIT",
     "authors": [

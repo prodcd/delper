@@ -63,7 +63,7 @@ class delper
             if ($num == 0) break;
             $key = $num & 0b00111111;
             $num = $num >> 6;
-            $out = $codes{$key}.$out;
+            $out = $codes[$key].$out;
         }
         return $out;
     }
@@ -79,7 +79,7 @@ class delper
         $codelen = strlen($code);
         for($i=0; $i < $codelen; $i++)
         {
-            $char = $code{$i};
+            $char = $code[$i];
             $pos  = strpos($codes, $char);
             $num  = $num << 6;
             $num  +=$pos;

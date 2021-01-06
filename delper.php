@@ -86,4 +86,22 @@ class delper
         }
         return $num;
     }
+    /**
+     * 生成随机字符串
+     * @param $length int 返回的字符串长度
+     * @param $strTpl string 字符串模板
+     * @return string
+     */
+    public static function randStr($length, $strTpl='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789')
+    {
+        //字符组合
+        $len = strlen($strTpl) - 1;
+        $randstr = '';
+        for ($i = 0; $i < $length; $i++)
+        {
+            $num = mt_rand(0,$len);
+            $randstr .= $strTpl[$num];
+        }
+        return $randstr;
+    }
 }

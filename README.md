@@ -4,3 +4,4 @@ PHP助手类
 + in_IP()
 + bigintToCode()
 + codeToBigint()
++ randStr()

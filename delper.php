@@ -11,21 +11,36 @@ class delper
     /**
      * 符串中一部分内容用*代替
      * @param $str 需要隐藏的密码字符串
-     * @param int $leftRetain 左边显示的字符串个数
-     * @param int $rightRetain 右边显示的字符串个数
-     * @param int $min 小于等于此长度的字符串默认返回6个星号 ******
+     * @param int $leftRetain 左边显示的字符串个数，大于等于0
+     * @param int $rightRetain 右边显示的字符串个数，大于等于0
+     * @param int $min 当mb_strlen($str) < $min时，返回"******"，大于等于0
      * @param string $replace 默认填充星号
+     * @param int $maxRetain "*"最大显示个数，默认不限制，大于等于0或null
      * @return string
      */
-    public static function showPassword($str, $leftRetain = 2, $rightRetain = 2, $min = 4, $replace = "*")
+    public static function showPassword($str, $leftRetain = 2, $rightRetain = 2, $min = 4, $replace = "*", $maxRetain = null)
     {
-        $strLen = strlen($str);
+        if(!is_int($leftRetain) || $leftRetain < 0) throw new \Exception('$leftRetain 必须大于等于0');
+        if(!is_int($rightRetain) || $rightRetain < 0) throw new \Exception('$rightRetain 必须大于等于0');
+        if(!is_int($min) || $min < 0) throw new \Exception('$min 必须大于等于0');
+        if(!is_null($maxRetain) && (!is_int($min) || $maxRetain < 0)) throw new \Exception('$maxRetain 必须是正整数或null');
+        //如果字符串数量长度小于$min，则返回"******"
+        $strLen = mb_strlen($str);
         if ($strLen <= $min) {
             return str_pad("", 6, $replace);
         }
-        return substr($str, 0, $leftRetain) . str_pad("", $strLen - ($leftRetain + $rightRetain), $replace) . substr($str, (0 - $rightRetain), $rightRetain);
+        //如果左右保留数量，大于字符串长度，则返回str
+        if ($leftRetain + $rightRetain > $strLen)
+        {
+            return $str;
+        }
+        //中间保留*数量，隐藏的数字与$maxRetain取最小值
+        $padLength = $strLen - ($leftRetain + $rightRetain);
+        $padLength = (!is_null($maxRetain) && $padLength > $maxRetain) ? $maxRetain : $padLength;
+        $pad = str_pad("", $padLength, $replace);
+        
+        return mb_substr($str, 0, $leftRetain) . $pad . mb_substr($str, (0 - $rightRetain), $rightRetain);
     }
-
     /**
      * 判断ip是否在规定子网中
      * @param $ip string 例如："192.168.10.125"
